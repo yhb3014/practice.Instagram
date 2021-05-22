@@ -182,4 +182,38 @@ public class MainController {
 		FileCopyUtils.copy(fileData, target);
 		return savedName;
 	}
+	
+	@RequestMapping("/main/recommend")
+	private String recommend(Model model) throws Exception{
+		return "/main/recommend";
+	}
+	
+	@RequestMapping(value = "main/search")
+	private String search(@RequestParam("word") String word, Model model) {
+		model.addAttribute("find_user", userService.findByUserIdContains(word));
+		model.addAttribute("ucnt", userService.countByUserIdContains(word));
+		model.addAttribute("word", word);
+		
+		return "main/search";
+	}
+	
+	@RequestMapping(value = "main/post/{id}")
+	private String post(@PathVariable("id") int id, Model model) throws Exception{
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		User user = userService.findByUserId(userId);
+		
+		model.addAttribute("postuserid", postService.findById(id).getUser().getId());
+		model.addAttribute("p", postService.findById(id));
+		model.addAttribute("img", post_imageService.findBypostId(id));
+		return "main/post";
+	}
+	
+	@GetMapping("/main/user/secret_user")
+	private String secret_user(Model model) throws Exception{
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		User user = userService.findByUserId(userId);
+		
+		model.addAttribute("id", user.getId());
+		return "/main/user/secret_user";
+	}
 }

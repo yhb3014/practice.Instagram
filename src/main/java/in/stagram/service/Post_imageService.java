@@ -31,4 +31,8 @@ public class Post_imageService {
 	public List<Post_image> findByGroupbyPostId() {
 		return post_imageRepository.findByGroupbyPostId();
 	}
+	
+	public List<Post_image> findBypostId(int id){
+		return post_imageRepository.findBypostId(id);
+	}
 }

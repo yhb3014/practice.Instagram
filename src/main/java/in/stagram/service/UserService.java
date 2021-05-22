@@ -1,5 +1,7 @@
 package in.stagram.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -57,9 +59,13 @@ public class UserService {
 		return user;
 	}
 	
+	public void save_u(User user) {
+		userRepository.save(user);
+	}
+	
 	public void save(UserRegistrationModel userModel) {
 		User user = createEntity(userModel);
-		userRepository.save(user);
+		save_u(user);
 	}
 	
 	public void img_update(String userId, String profile_photo) {
@@ -69,9 +75,6 @@ public class UserService {
 		save_u(user);
 	}
 	
-	public void save_u(User user) {
-		userRepository.save(user);
-	}
 	
 	public void profile_update(String userId, String name, String website, String introduce) {
 		User user = findByUserId(userId);
@@ -80,5 +83,27 @@ public class UserService {
 		user.setIntroduce(introduce);
 		
 		save_u(user);
+	}
+	
+	public List<User> findByUserIdContains(String word){
+		return userRepository.findByUserIdContains(word);
+	}
+	
+	public int countByUserIdContains(String word) {
+		return userRepository.countByUserIdContains(word);
+	}
+	
+	public void enable_user(int id, int t) {
+		User user = findById(id);
+		user.setEnable(t);
+		
+		save_u(user);
+	}
+	
+	public boolean IsSecret(int id) {
+		User u = userRepository.findById(id);
+		if (u.getEnable() == 1)
+			return true;
+		return false;
 	}
 }

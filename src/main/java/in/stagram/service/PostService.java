@@ -39,4 +39,8 @@ public class PostService {
 	public int countByUserId(int id) {
 		return postRepository.countByUserId(id);
 	}
+	
+	public Post findById(int id) {
+		return postRepository.findById(id);
+	}
 }

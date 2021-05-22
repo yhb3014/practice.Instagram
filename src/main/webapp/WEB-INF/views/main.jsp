@@ -15,23 +15,36 @@
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Poor+Story&display=swap&subset=korean" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/res/main.css" type="text/css">
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 <title>${user.name}님의Feed</title>
 <style>
 #footer {
 	position: fixed;
-	background-color: white;
+	background-color: white; /*임의색상*/
 	left: 0;
 	right: 0;
 	bottom: 0;
 	height: 6rem;
 }
-
 #contents {
 	bottom: 6rem;
 }
-
+.heart {
+	margin-left: 45px;
+	background-color: white;
+	border: 0;
+	outline: 0;
+	font-size: 18px;
+	float: left;
+	color: red;
+}
+.like {
+	margin-top: 10px;
+	margin-left: 50px;
+}
+.write {
+	margin-top: 5px;
+}
 <script> $(function() { $('.slide_gallery ').bxSlider({ // auto :true,
 	autoControls : true, stopAutoOnClick : true, pager : true, controls : true
 	});
@@ -71,13 +84,14 @@
 					</div>
 					<div class="bar">
 						<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-						<!-- 이부분은 나중에 하트 설정할때 -->
-						<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+						<span class="glyphicon glyphicon-comment" aria-hidden="true" onclick="location.href='/main/post/${p.id}'"></span>
 					</div>
 					<div class="write">
-						<span>${p.description}</span>
+						<div class="write" style="cursor: pointer;">
+						<span onclick="location.href='/main/post/${p.id}'">${p.description}</span>
 					</div>
 				</div>
+			</div>
 			</c:forEach>
 
 		</div>
