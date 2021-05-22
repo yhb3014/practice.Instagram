@@ -12,7 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import in.stagram.model.User;
+import in.stagram.domain.User;
 
 @Component
 public class MyAuthenticationProvider implements AuthenticationProvider {

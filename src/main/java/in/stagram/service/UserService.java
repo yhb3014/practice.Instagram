@@ -2,10 +2,9 @@ package in.stagram.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
-import in.stagram.model.User;
+import in.stagram.domain.User;
 import in.stagram.model.UserRegistrationModel;
 import in.stagram.repository.UserRepository;
 import in.stagram.utils.EncryptionUtils;
@@ -16,7 +15,6 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Transactional
 	public User login(String userId, String password) {
 		User user = userRepository.findOneByUserId(userId);
 		if(user == null)
@@ -27,17 +25,14 @@ public class UserService {
 		return user;
 	}
 	
-	@Transactional
 	public User findByUserId(String userId) {
 		return userRepository.findByUserId(userId);
 	}
 	
-	@Transactional
 	public User findById(int id) {
 		return userRepository.findById(id);
 	}
 	
-	@Transactional
 	public boolean hasErrors(UserRegistrationModel userModel, BindingResult  bindingResult) {
 		if(bindingResult.hasErrors())
 			return true;
@@ -50,7 +45,6 @@ public class UserService {
 		return false;
 	}
 	
-	@Transactional
 	public User createEntity(UserRegistrationModel userModel) {
 		User user = new User();
 		String pw = EncryptionUtils.encryptMD5(userModel.getPasswd1());
@@ -63,9 +57,28 @@ public class UserService {
 		return user;
 	}
 	
-	@Transactional
 	public void save(UserRegistrationModel userModel) {
 		User user = createEntity(userModel);
 		userRepository.save(user);
+	}
+	
+	public void img_update(String userId, String profile_photo) {
+		User user = findByUserId(userId);
+		user.setProfile_photo(profile_photo);
+		
+		save_u(user);
+	}
+	
+	public void save_u(User user) {
+		userRepository.save(user);
+	}
+	
+	public void profile_update(String userId, String name, String website, String introduce) {
+		User user = findByUserId(userId);
+		user.setName(name);
+		user.setWebsite(website);
+		user.setIntroduce(introduce);
+		
+		save_u(user);
 	}
 }

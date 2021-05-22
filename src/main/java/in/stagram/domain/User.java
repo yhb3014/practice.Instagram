@@ -1,6 +1,5 @@
-package in.stagram.model;
+package in.stagram.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +20,7 @@ public class User {
 	private String name;
 	private String introduce;
 	private String phone;
+	private String profile_photo;
 	private String website;
 	private String userType;
 	private int enable;

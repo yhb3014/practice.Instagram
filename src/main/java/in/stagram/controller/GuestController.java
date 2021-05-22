@@ -18,7 +18,7 @@ public class GuestController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping({"/guest/login", ""})
+	@GetMapping({"/guest/login", "/"})
 	private String login(Model model) throws Exception{
 		return "/guest/login";
 	}
