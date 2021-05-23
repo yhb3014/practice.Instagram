@@ -25,6 +25,6 @@
 	<a href="/main"><span class="glyphicon glyphicon-home" style="color: #6fff59; font-size: 30px; margin-top: 13px; margin-left: 50px;" aria-hidden="true"></span></a>
 	<a href="/main/recommend"><span class="glyphicon glyphicon-search" style="color: #6193ff; font-size: 30px; margin-top: 13px; margin-left: 80px;" aria-hidden="true"></span></a>
 	<a href="/main/upload"><span class="glyphicon glyphicon-plus-sign" style="color: #c061ff; font-size: 30px; margin-top: 13px; margin-left: 80px;" aria-hidden="true"></span></a>
-	<a href=""><span class="glyphicon glyphicon-heart" style="color: #ff6161; font-size: 30px; margin-top: 13px; margin-left: 80px;" aria-hidden="true"></span></a>
+	<a href="/main/heart"><span class="glyphicon glyphicon-heart" style="color: #ff6161; font-size: 30px; margin-top: 13px; margin-left: 80px;" aria-hidden="true"></span></a>
 	<a href="/main/user/${currentid}"><span class="glyphicon glyphicon-user" style="color: gray; font-size: 30px; margin-top: 13px; margin-left: 80px;" aria-hidden="true"></span></a>
 </html>

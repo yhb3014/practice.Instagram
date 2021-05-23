@@ -2,6 +2,7 @@ package in.stagram.controller;
 
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,10 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import in.stagram.domain.Follow;
+import in.stagram.domain.Heart;
 import in.stagram.domain.Post;
 import in.stagram.domain.Post_image;
 import in.stagram.domain.User;
 import in.stagram.service.FollowService;
+import in.stagram.service.Follow_requestService;
 import in.stagram.service.PostService;
 import in.stagram.service.Post_imageService;
 import in.stagram.service.UserService;
@@ -39,6 +42,8 @@ public class MainController {
 	private Post_imageService post_imageService;
 	@Autowired
 	private FollowService followService;
+	@Autowired
+	private Follow_requestService follow_requestService;
 	
 	@RequestMapping("/main")
 	private String main_page(Model model) throws Exception{
@@ -64,8 +69,11 @@ public class MainController {
 	@RequestMapping("/main/user/{id}")
 	private String main_user(@PathVariable("id") int id, Model model) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-		model.addAttribute("user", userService.findByUserId(userId));
+		User user = userService.findById(id);
+		
 		model.addAttribute("page_id", id);
+		model.addAttribute("page_userid", user.getUserId());
+		model.addAttribute("user", userService.findByUserId(userId));
 		model.addAttribute("post", postService.findByUserIdOrderByIdDesc(id));
 		model.addAttribute("post_image", post_imageService.findByGroupbyPostId());
 		model.addAttribute("post_count", postService.countByUserId(id));
@@ -77,11 +85,13 @@ public class MainController {
 	
 	@RequestMapping("/main/user/follower/{id}")
 	private String follower(@PathVariable("id") int id, Model model) throws Exception{
+		model.addAttribute("follower", followService.findByFollowerId(id));
 		return "/main/user/follower";
 	}
 	
 	@RequestMapping("/main/user/following/{id}")
 	private String following(@PathVariable("id") int id, Model model) throws Exception{
+		model.addAttribute("following", followService.findByFollowingId(id));
 		return "/main/user/following";
 	}
 	
@@ -215,5 +225,15 @@ public class MainController {
 		
 		model.addAttribute("id", user.getId());
 		return "/main/user/secret_user";
+	}
+	
+	@RequestMapping("main/heart")
+	private String heart(Model model) throws Exception{
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		User user = userService.findByUserId(userId);
+		
+		int followcount = follow_requestService.countByReceiveId(user.getId());
+		model.addAttribute("followcount", followcount);
+		return "main/heart";
 	}
 }

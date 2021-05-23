@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import in.stagram.domain.User;
 import in.stagram.service.FollowService;
+import in.stagram.service.Follow_requestService;
 import in.stagram.service.UserService;
 
 @Controller
@@ -24,6 +25,8 @@ public class FollowController {
 	private FollowService followService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private Follow_requestService follow_requestService;
 	
 	
 	@RequestMapping("/follow")
@@ -84,5 +87,32 @@ public class FollowController {
 		
 		followService.deleteByFollowingIdAndFollowerId(id, u.getId());
 		return 1;
+	}
+	
+	@RequestMapping("/follow/request/view")
+	@ResponseBody
+	private Map<String, Object> follow_request_view() throws Exception{
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		User u = userService.findByUserId(userId);
+		int followcount = follow_requestService.countByReceiveId(u.getId());
+		
+		Map<String, Object> m = new HashMap<String, Object>();
+		m.put("followcnt", followcount);
+		m.put("fr", follow_requestService.findByReceiveId(u.getId()));
+		
+		return m;
+	}
+	
+	@RequestMapping("/follow/request/accept/{id}")
+	@ResponseBody
+	private User follow_request_accept(@PathVariable int id) throws Exception{
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		User u = userService.findByUserId(userId);
+		
+		User followuser = userService.findById(id);
+		
+		follow_requestService.deleteByRequestIdAndReceiveId(id, u.getId());
+		followService.save(id, u.getId());
+		return followuser;
 	}
 }
