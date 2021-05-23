@@ -111,11 +111,31 @@
 			<span>${p.description}</span>
 		</div>
 	</div>
-	<div class="comment"></div>
+	<div class="comment">
+	<div class="container">
+		<label for="content">comment</label>
+		<form name="commentInsertForm">
+			<div class="input-group">
+				<input type="hidden" name="pid" id="pid" value="${p.id}" /> 
+				<input type="text" class="form-control" id="content" name="content"
+					placeholder="내용을 입력하세요."> 
+				<input type="hidden" name="uid" value="${currentid}" />
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button"
+						name="commentInsertBtn">등록</button>
+				</span>
+			</div>
+		</form>
+	</div>
+	<div class="container">
+		<div class="commentList"></div>
+	</div>
+	</div>
 </div>
 <div id="footer">
 	<%@ include file="../include/bottom.jsp"%>
 </div>
 	<%@ include file="like.jsp"%>
+	<%@ include file="comment.jsp"%>
 </body>
 </html>
