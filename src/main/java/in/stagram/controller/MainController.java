@@ -29,6 +29,7 @@ import in.stagram.domain.User;
 import in.stagram.service.CommentService;
 import in.stagram.service.FollowService;
 import in.stagram.service.Follow_requestService;
+import in.stagram.service.HeartService;
 import in.stagram.service.PostService;
 import in.stagram.service.Post_imageService;
 import in.stagram.service.UserService;
@@ -48,6 +49,8 @@ public class MainController {
 	private Follow_requestService follow_requestService;
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private HeartService heartService;
 	
 	@RequestMapping("/main")
 	private String main_page(Model model) throws Exception{
@@ -63,6 +66,24 @@ public class MainController {
 				posting.add(p);
 			}
 		}
+		
+		List<PoCo> poco = new ArrayList<>();
+		for (Post po : posting) {
+			PoCo p = new PoCo();
+			p.setPostid(po.getId());
+			p.setCnt(heartService.countByPostIdAndUserId(po.getId(), u.getId()));
+			poco.add(p);
+		}
+		model.addAttribute("poco", poco);
+		
+		List<PoCo> likecnt = new ArrayList<>();
+		for (Post po : posting) {
+			PoCo p = new PoCo();
+			p.setCnt(heartService.countByPostId(po.getId()));
+			p.setPostid(po.getId());
+			likecnt.add(p);
+		}
+		model.addAttribute("like_cnt", likecnt);
 		
 		List<PoCo> cmtcnt = new ArrayList<>();
 		for (Post po : posting) {

@@ -45,6 +45,7 @@
 .write {
 	margin-top: 5px;
 }
+
 <script> $(function() { $('.slide_gallery ').bxSlider({ // auto :true,
 	autoControls : true, stopAutoOnClick : true, pager : true, controls : true
 	});
@@ -101,11 +102,11 @@
 						</div>
 						<sec:authentication property="user.id" var="currentid" />
 						<div class="bar">
-							<div class="heart_${p.id}"></div> <!-- 좋아요는 나중에 함 -->
+							<div class="heart_${p.id}"></div>
 						</div>
 						<div class="write" style="cursor: pointer;">
 							<span onclick="location.href='/main/post/${p.id}'">${p.description}</span>
-								<div class="tag_${p.id}"></div> <!-- 태그는 나중에 함 -->
+								<div class="tag_${p.id}"></div> <!-- 태그는 아직 -->
 								<br />
 								<c:forEach var="cmt" items="${cmt_cnt}">
 								<c:if test="${p.id == cmt.postid && cmt.cnt > 0}">
@@ -123,3 +124,6 @@
 <div id="footer">
 	<%@ include file="include/bottom.jsp"%>
 </div>
+	<%@ include file="main/main_heart.jsp"%>
+	</body>
+</html>
