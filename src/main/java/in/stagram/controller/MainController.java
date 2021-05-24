@@ -3,6 +3,7 @@ package in.stagram.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,10 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import in.stagram.domain.Follow;
-import in.stagram.domain.Heart;
+import in.stagram.domain.PoCo;
 import in.stagram.domain.Post;
 import in.stagram.domain.Post_image;
 import in.stagram.domain.User;
+import in.stagram.service.CommentService;
 import in.stagram.service.FollowService;
 import in.stagram.service.Follow_requestService;
 import in.stagram.service.PostService;
@@ -44,6 +46,8 @@ public class MainController {
 	private FollowService followService;
 	@Autowired
 	private Follow_requestService follow_requestService;
+	@Autowired
+	private CommentService commentService;
 	
 	@RequestMapping("/main")
 	private String main_page(Model model) throws Exception{
@@ -60,9 +64,21 @@ public class MainController {
 			}
 		}
 		
+		List<PoCo> cmtcnt = new ArrayList<>();
+		for (Post po : posting) {
+			PoCo p = new PoCo();
+			p.setPostid(po.getId());
+			p.setCnt(commentService.countByPostId(po.getId()));
+			cmtcnt.add(p);
+		}
+		model.addAttribute("cmt_cnt", cmtcnt);
+		Post p = new Post();
+		Collections.sort(posting, p);
+		
 		model.addAttribute("user", u);
-		model.addAttribute("posting", postService.findByUserIdOrderByIdDesc(u.getId()));
+		model.addAttribute("posting", posting);
 		model.addAttribute("img", post_imageService.findAll());
+		model.addAttribute("psize", posting.size());
 		return "/main";
 	}
 	

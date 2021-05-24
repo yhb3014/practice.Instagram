@@ -54,50 +54,72 @@
 </head>
 <body>
 	<div id="contents">
-		<div class="post">
-			<div class="nav">
-				<span class="title"> <a href="/main" class="title_ft">Instagram</a>
-				</span> <a href="/main"> <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-				</a>
-			</div>
-
-			<c:forEach var="p" items="${posting}">
-				<!-- java의 for문과 같다 posting list를 for문돌림 -->
-				<div class="r">
-					<div class="ii">
-						<div class="title_image">
-							<a href="/main/user/${p.user.id}"> <img src="/images/profile/${p.user.profile_photo}" class="tiny_image">
-							</a>
+	<div class="post">
+		<div class="nav">
+			<span class="title"> <a href="/main" class="title_ft">Instagram</a>
+			</span> <a href="/main"><span class="glyphicon glyphicon-send"
+				aria-hidden="true"></span></a>
+		</div>
+		<c:choose>
+			<c:when test="${psize == 0}">
+				<div class="nopost">
+					<span>게시물이 없습니다.</span> <br /> 
+					<a href="/main/recommend">팔로우 하러 가기</a>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<c:forEach var="p" items="${posting}">
+					<div class="r">
+						<div>
+							<div class="title_image">
+								<c:choose>
+									<c:when test="${p.user.profile_photo == null}">
+										<a href="/main/user/${p.user.id}"> <img
+											src="/images/noimage.png" class="tiny_image" align="left">
+										</a>
+									</c:when>
+									<c:otherwise>
+										<a href="/main/user/${p.user.id}"> 
+										<img src="/images/profile/${p.user.profile_photo}"
+											class="tiny_image" align="left">
+										</a>
+									</c:otherwise>
+								</c:choose>
+								</div>
+							<div class="userid_txt">
+								<a href="/main/user/${p.user.id}">${p.user.userId}</a>
+							</div>
 						</div>
-						<div class="userid_txt">
-							<a href="/main/user/${p.user.id}">${p.user.userId}</a>
+						<div id="gallery_wrap">
+							<ul class="slide_gallery">
+								<c:forEach var="img" items="${img}">
+									<c:if test="${p.id == img.postId}">
+										<li><img src="/images/${p.user.userId}/${img.filename}" class="imgg"></li>
+									</c:if>
+								</c:forEach>
+							</ul>
 						</div>
-					</div>
-					<div id="gallery_wrap">
-						<ul class="slide_gallery">
-							<c:forEach var="img" items="${img}">
-								<c:if test="${p.id == img.postId}">
-									<li><img src="/images/${p.user.userId}/${img.filename}" class="img"></li>
+						<sec:authentication property="user.id" var="currentid" />
+						<div class="bar">
+							<div class="heart_${p.id}"></div> <!-- 좋아요는 나중에 함 -->
+						</div>
+						<div class="write" style="cursor: pointer;">
+							<span onclick="location.href='/main/post/${p.id}'">${p.description}</span>
+								<div class="tag_${p.id}"></div> <!-- 태그는 나중에 함 -->
+								<br />
+								<c:forEach var="cmt" items="${cmt_cnt}">
+								<c:if test="${p.id == cmt.postid && cmt.cnt > 0}">
+									<span onclick="location.href='/main/post/${p.id}'">
+										댓글 ${cmt.cnt}개 모두 보기</span>
 								</c:if>
 							</c:forEach>
-						</ul>
+						</div>
 					</div>
-					<div class="bar">
-						<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-						<span class="glyphicon glyphicon-comment" aria-hidden="true" onclick="location.href='/main/post/${p.id}'"></span>
-					</div>
-					<div class="write">
-						<div class="write" style="cursor: pointer;">
-						<span onclick="location.href='/main/post/${p.id}'">${p.description}</span>
-					</div>
-				</div>
-			</div>
-			</c:forEach>
-
-		</div>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
 	</div>
-	<div id="footer">
-		<%@ include file="include/bottom.jsp"%>
-	</div>
-</body>
-</html>
+</div>
+<div id="footer">
+	<%@ include file="include/bottom.jsp"%>
+</div>
