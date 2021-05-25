@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import in.stagram.domain.Follow;
+import in.stagram.domain.Heart;
 import in.stagram.domain.PoCo;
 import in.stagram.domain.Post;
 import in.stagram.domain.Post_image;
@@ -148,9 +149,8 @@ public class MainController {
 			if(user.getProfile_photo() != null) {
 				File file = new File(upload_path + user.getProfile_photo());
 				file.delete();
-			} else {
-				mFile.transferTo(new File(upload_path + mFile.getOriginalFilename()));
-			}
+			} 
+			mFile.transferTo(new File(upload_path + mFile.getOriginalFilename()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -189,7 +189,6 @@ public class MainController {
 		
 		Post post = new Post();
 		
-		// request.getParameter는 String으로 받아오므로 Integer.parseInt를 통해 형변환
 		String u = request.getParameter("userid");
 		int user_id = Integer.parseInt(u);
 		User user = userService.findById(user_id);
@@ -232,6 +231,8 @@ public class MainController {
 	
 	@RequestMapping("/main/recommend")
 	private String recommend(Model model) throws Exception{
+		model.addAttribute("post9", postService.findByPostlimit9());
+		model.addAttribute("post_image", post_imageService.findByGroupbyPostId());
 		return "/main/recommend";
 	}
 	
@@ -252,6 +253,8 @@ public class MainController {
 		model.addAttribute("postuserid", postService.findById(id).getUser().getId());
 		model.addAttribute("p", postService.findById(id));
 		model.addAttribute("img", post_imageService.findBypostId(id));
+		model.addAttribute("heart_cnt", heartService.countByPostId(id));
+		model.addAttribute("cnt", heartService.countByPostIdAndUserId(user.getId(), id));
 		return "main/post";
 	}
 	
@@ -268,9 +271,37 @@ public class MainController {
 	private String heart(Model model) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User user = userService.findByUserId(userId);
+		List<Post> Lpost = postService.findByUserUserId(userId);
+		
+		List<Heart> Lheart = new ArrayList<>();
+		
+		for(Post p : Lpost) {
+			List<Heart> lh = heartService.findByPostId(p.getId());
+			for(Heart hh : lh) {
+				Lheart.add(hh);
+			}
+		}
 		
 		int followcount = follow_requestService.countByReceiveId(user.getId());
 		model.addAttribute("followcount", followcount);
+		
+		Heart he = new Heart();
+		Collections.sort(Lheart, he);
+		model.addAttribute("hearts", Lheart);
+		model.addAttribute("post_image", post_imageService.findByGroupbyPostId());
+		
 		return "main/heart";
+	}
+	
+	@RequestMapping("/main/delete_post")
+	public String delete_post(HttpServletRequest request, Model model) throws Exception{
+		String pid = request.getParameter("postid");
+		int postid = Integer.parseInt(pid);
+		
+		commentService.deleteByPostId(postid);
+		postService.deleteById(postid);
+		heartService.deleteByPostId(postid);
+		post_imageService.deleteByPostId(postid);
+		return "redirect:/main";
 	}
 }

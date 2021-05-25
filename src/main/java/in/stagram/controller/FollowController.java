@@ -115,4 +115,13 @@ public class FollowController {
 		followService.save(id, u.getId());
 		return followuser;
 	}
+	
+	@RequestMapping("/follow/request/{id}")
+	@ResponseBody
+	private int follow_request(@PathVariable int id) throws Exception{
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		User u = userService.findByUserId(userId);
+		
+		return follow_requestService.request_save(id, u.getId());
+	}
 }

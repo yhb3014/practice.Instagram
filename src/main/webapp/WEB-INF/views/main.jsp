@@ -17,6 +17,17 @@
 <link rel="stylesheet" href="/res/main.css" type="text/css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 <title>${user.name}님의Feed</title>
+<script>
+	$(function() {
+		$('.slide_gallery').bxSlider({
+			// auto : true,
+			autoControls : true,
+			stopAutoOnClick : true,
+			pager : true,
+			controls : true
+		});
+	});
+</script>
 <style>
 #footer {
 	position: fixed;
@@ -46,11 +57,6 @@
 	margin-top: 5px;
 }
 
-<script> $(function() { $('.slide_gallery ').bxSlider({ // auto :true,
-	autoControls : true, stopAutoOnClick : true, pager : true, controls : true
-	});
-});
-</script>
 </style>
 </head>
 <body>

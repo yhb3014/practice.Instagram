@@ -35,4 +35,8 @@ public class Post_imageService {
 	public List<Post_image> findBypostId(int id){
 		return post_imageRepository.findBypostId(id);
 	}
+	
+	public void deleteByPostId(int id) {
+		post_imageRepository.deleteByPostId(id);
+	}
 }

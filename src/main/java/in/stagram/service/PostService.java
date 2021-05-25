@@ -43,4 +43,20 @@ public class PostService {
 	public Post findById(int id) {
 		return postRepository.findById(id);
 	}
+	
+	public void deleteById(int id) {
+		postRepository.deleteById(id);
+	}
+	
+	public List<Post> findByUserId(int id){
+		return postRepository.findByUserId(id);
+	}
+	
+	public List<Post> findByUserUserId(String userId){
+		return postRepository.findByUserUserId(userId);
+	}
+	
+	public List<Post> findByPostlimit9(){
+		return postRepository.findByPostlimit9();
+	}
 }

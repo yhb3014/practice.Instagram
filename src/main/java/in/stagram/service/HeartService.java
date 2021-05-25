@@ -1,6 +1,7 @@
 package in.stagram.service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,13 @@ public class HeartService {
 	
 	public void deleteByPostIdAndUserId(int pid, int uid) {
 		heartRepository.deleteByPostIdAndUserId(pid, uid);
+	}
+	
+	public void deleteByPostId(int id) {
+		heartRepository.deleteByPostId(id);
+	}
+	
+	public List<Heart> findByPostId(int id){
+		return heartRepository.findByPostId(id);
 	}
 }

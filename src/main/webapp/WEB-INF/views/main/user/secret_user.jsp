@@ -134,7 +134,7 @@ h4 {
 		<div class="secret_d"></div>
 		
 		<br /> <span style="color: gray;">계정이 비공개 상태인 경우 회원님이 승인한 사람만
-			Outstagram에서 회원님의 사진과<br /> 동영상을 볼 수 있습니다. <br />기존 팔로워는 영향을 받지
+			Instagram에서 회원님의 사진과<br /> 동영상을 볼 수 있습니다. <br />기존 팔로워는 영향을 받지
 			않습니다.
 		</span>
 	</div>
