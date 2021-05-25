@@ -111,7 +111,7 @@ public class MainController {
 		
 		model.addAttribute("page_id", id);
 		model.addAttribute("page_userid", user.getUserId());
-		model.addAttribute("user", userService.findByUserId(userId));
+		model.addAttribute("user", user);
 		model.addAttribute("post", postService.findByUserIdOrderByIdDesc(id));
 		model.addAttribute("post_image", post_imageService.findByGroupbyPostId());
 		model.addAttribute("post_count", postService.countByUserId(id));
@@ -237,7 +237,7 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "main/search")
-	private String search(@RequestParam("word") String word, Model model) {
+	private String search(@RequestParam("word") String word, Model model) throws Exception{
 		model.addAttribute("find_user", userService.findByUserIdContains(word));
 		model.addAttribute("ucnt", userService.countByUserIdContains(word));
 		model.addAttribute("word", word);

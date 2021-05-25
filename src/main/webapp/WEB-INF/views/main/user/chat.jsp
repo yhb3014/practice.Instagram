@@ -16,7 +16,6 @@
 			success : function(data){
 				if(data == 1){
 					chatlist();
-					 // 메시지를 보내면 메시지 입력창은 초기화
 					$('.textiiii').val('');
 				}
 			}
@@ -34,13 +33,15 @@
 				var a = '';
 				$.each(data, function(key, value){
 					a += '<div class="hmhm">';
-					if(value.send.id == id) { // 보낸건 오른쪽
+					if(value.send.id == id) { 
 						a += '<div class="sasa">';
-						a += '<span>'+ value.content +'</span>';
+						a += '<span style="float: left">'+ value.content +'</span>';
 						a += '</div>';
 					}
-					else // 받은건 왼쪽
-						a += '<span>' + value.content + '</span>';
+					else{
+						a += '<span style="float: right; margin-left: 50px;">';
+						a += value.content + '</span>';
+					}
 					a += '<br /></div>';
 				});
 				$('.msg_view').html(a);
@@ -48,6 +49,6 @@
 		});
 	}
 	$(document).ready(function() {
-		setInterval(chatlist, 3000); // 3초
+		setInterval(chatlist, 3000);
 	});
 </script>

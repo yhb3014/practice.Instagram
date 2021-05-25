@@ -12,8 +12,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import in.stagram.service.MyAuthenticationProvider;
 
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
@@ -29,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.csrf().disable()
 			.authorizeRequests()
-				.antMatchers("/admin/**").hasAuthority("ROLE_ADMIB")
+				.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 				.antMatchers("/guest/**")
 				.permitAll()
 				.antMatchers("/")
