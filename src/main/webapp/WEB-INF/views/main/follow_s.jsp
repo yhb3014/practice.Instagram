@@ -14,15 +14,17 @@
 				var a = '';
 				var b = '';
 				if(data.booool == true){
-					a += '<a class="btn btn-default" onclick="followDelete('+ pageid +')">' 
+					a += '<a class="btn btn-default" onclick="followDelete('+ pageid +')" style="margin-left: 110px; width: 180px; float: left;">' 
 						+ '팔로우 취소</a>'
 				}
 				else{
-					a += '<a class="btn btn-default" onclick="followInsert('+ pageid +')">' 
+					a += '<a class="btn btn-default" onclick="followInsert('+ pageid +')" style="margin-left: 110px; width: 180px; float: left;">' 
 						+ '팔로우</a>'
 				}
-				b += '<span style="margin-left: 20px;">'+ data.follower +'</span><br> <span>팔로워</span>';
-				a += '<a href="/main/user/message/${page_id}" class="btn btn-default">메시지</a>'
+				b += '<span style="margin-left: 20px;">'+ data.follower +'</span><br> <span' +
+				'style="margin-left: 8px;">팔로워</span>';
+				a += '<a href="/main/user/message/${page_id}" class="btn btn-default"'
+					+'style="margin-left: 20px; width: 180px;">메시지</a>'
 				
 				$('.follow_d').html(a);
 				$('.follower_d').html(b);

@@ -10,21 +10,25 @@
 				var a = '';
 				var b = '';
 				$.each(data.fr, function(key, value){
-					a += '<div>';
-					a += '<div class="img" onclick="location.href=\'/main/user/'+
+					a += '<div style="weight:500px; height:50px;">';
+					a += '<div class="img" style="cursor:pointer; onclick="location.href=\'/main/user/'+
 						value.request.id +'\'">';
-					if(value.request.profile_photo == null)
-						a += '<img src="/images/noimage.png">';
-					else
-						a += '<img src="/images/profile/' + value.request.profile_photo + '">';
-					
-					a += '<span>' + value.request.userId +'</span>';
+					if(value.request.profile_photo == null){
+						a += '<img src="/images/noimage.png" style="margin-left:30px;margin-right:15px;height:30px;width:30px;border-radius: 30px;float:left;">';
+					}
+					else{
+						a += '<img src="/images/profile/' + value.request.profile_photo
+							+ '" style="margin-left:30px;margin-right:15px;height:30px;width:30px;border-radius: 30px;float:left;">';
+					}
+					a += '<span style="font-size: 18px; margin-left: 9px; ">' + value.request.userId +'</span>';
 					a += '</div>'
-					a += '<a class="btn btn-default" onclick="follow_accept('+ value.request.id +');">팔로우 승인</a>';			
+					a += '<a class="btn btn-default" onclick="follow_accept('+ value.request.id +');" style="margin-left:300px;">팔로우 승인</a>'; //follow_accept('+ value.request.id +');
+									
 					a += '</div>';
 				});
-				b += '<span">팔로우 요청 알림 </span><span>'+ data.followcnt +'개</span>';
-
+				
+				b += '<span style="font-size: 18px;">팔로우 요청 알림 </span><span'
+					+ 'style="color: red;">'+ data.followcnt +'개</span>';
 				$('.request_user').html(a);
 				$('.request_alarm').html(b);
 			}
@@ -42,8 +46,6 @@
 			}
 		});
 	}
-
-
 	$(document).ready(function() {
 		followrequestview();
 	});

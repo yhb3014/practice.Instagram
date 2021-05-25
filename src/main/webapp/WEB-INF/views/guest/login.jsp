@@ -54,7 +54,7 @@ body {
 				<img src="/images/main_insta_login2.jpg" class="login_img">
 			</div>
 			
-			<div style="position: absolute; text-align: center; right: 34%; width: 450px; top: 200px; font-size: 1.5em; position: absolute;">
+			<div style="position: absolute; text-align: center; right: 20%; width: 450px; top: 200px; font-size: 1.5em; position: absolute;">
 				<div>
 					<span style="margin-left: 70px; font-size: 55px; font-family: 'Playfair Display', serif;"><a href="/" style="color: black; text-decoration: none;">Instagram</a></span>
 				</div>

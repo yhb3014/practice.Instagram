@@ -47,7 +47,7 @@ input.form-control.w300 {
 				<img src="/images/insta_register.JPG">
 			</div>
 			<div
-				style="position: absolute; text-align: center; right: 34%; width: 450px; top: 300px; font-size: 1.5em; position: absolute;">
+				style="position: absolute; text-align: center; right: 20%; width: 450px; top: 300px; font-size: 1.5em; position: absolute;">
 
 				<form:form method="post" modelAttribute="userRegistrationModel"
 					autocomplete="off">

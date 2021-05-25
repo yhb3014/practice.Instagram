@@ -55,4 +55,8 @@ public class FollowService {
 		return followRepository.findByFollowerId(id);
 	}
 	
+	public void delete_user(int id) {
+		followRepository.deleteByFollowingId(id);
+		followRepository.deleteByFollowerId(id);
+	}
 }

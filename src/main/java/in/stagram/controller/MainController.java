@@ -27,6 +27,7 @@ import in.stagram.domain.PoCo;
 import in.stagram.domain.Post;
 import in.stagram.domain.Post_image;
 import in.stagram.domain.User;
+import in.stagram.service.ChatService;
 import in.stagram.service.CommentService;
 import in.stagram.service.FollowService;
 import in.stagram.service.Follow_requestService;
@@ -52,6 +53,8 @@ public class MainController {
 	private CommentService commentService;
 	@Autowired
 	private HeartService heartService;
+	@Autowired
+	private ChatService chatservice;
 	
 	@RequestMapping("/main")
 	private String main_page(Model model) throws Exception{
@@ -303,5 +306,38 @@ public class MainController {
 		heartService.deleteByPostId(postid);
 		post_imageService.deleteByPostId(postid);
 		return "redirect:/main";
+	}
+	
+	@RequestMapping("/main/membership_out")
+	public String apply_cancel(Model model) throws Exception{
+		return "main/membership_out";
+	}
+	
+	@RequestMapping("/main/real_out")
+	public String real_out(HttpServletRequest request) throws Exception{
+		String uid = request.getParameter("uid");
+		String pswd = request.getParameter("pswd");
+		
+		int userid = Integer.parseInt(uid);
+		
+		if (userService.user_exit2(userid, pswd)) {
+			return "redirect:/main/membership_out?error";
+		}
+		
+		List<Post> pl= postService.findByUserId(userid);
+		for (Post p : pl) {
+			heartService.deleteByPostId(p.getId());
+			postService.deleteById(p.getId());
+			post_imageService.deleteByPostId(p.getId());
+			commentService.deleteByPostId(p.getId());
+		}
+		
+		chatservice.deleteUser(userid);
+		followService.delete_user(userid);
+		follow_requestService.delete_user(userid);
+		commentService.deleteByUserId(userid);
+		
+		userService.deleteById(userid);
+		return "redirect:/main/logout_processing";
 	}
 }

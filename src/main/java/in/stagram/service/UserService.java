@@ -106,4 +106,16 @@ public class UserService {
 			return true;
 		return false;
 	}
+	
+	public boolean user_exit2(int uid, String pswd) {
+		String pw = EncryptionUtils.encryptMD5(pswd);
+		if(userRepository.countByIdAndPassword(uid, pw)==0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void deleteById(int id) {
+		userRepository.deleteById(id);
+	}
 }
