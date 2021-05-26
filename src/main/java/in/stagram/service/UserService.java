@@ -107,6 +107,12 @@ public class UserService {
 		return false;
 	}
 	
+	public boolean user_exist(String userid, String phone) {
+		if(userRepository.countByUserIdAndPhone(userid, phone) != 0)
+				return true;
+		return false; 
+	}
+	
 	public boolean user_exit2(int uid, String pswd) {
 		String pw = EncryptionUtils.encryptMD5(pswd);
 		if(userRepository.countByIdAndPassword(uid, pw)==0) {
@@ -117,5 +123,13 @@ public class UserService {
 	
 	public void deleteById(int id) {
 		userRepository.deleteById(id);
+	}
+	
+	public void pswd_update(String pswd, String userid) {
+		User user = findByUserId(userid);
+		String pw = EncryptionUtils.encryptMD5(pswd);
+		user.setPassword(pw);
+		
+		save_u(user);
 	}
 }
