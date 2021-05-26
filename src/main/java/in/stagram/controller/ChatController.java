@@ -39,7 +39,7 @@ public class ChatController {
 	
 	@RequestMapping("/chat/list/{id}")
 	@ResponseBody
-	private List<Chat> chatlist(@PathVariable int id) throws Exception{
+	public List<Chat> chatlist(@PathVariable int id) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User user = userService.findByUserId(userId);
 		
@@ -56,7 +56,7 @@ public class ChatController {
 	
 	@RequestMapping("/chat/insert")
 	@ResponseBody
-	private int chat_insert(@RequestParam int sendid, @RequestParam int receiveid, @RequestParam String message) throws Exception{
+	public int chat_insert(@RequestParam int sendid, @RequestParam int receiveid, @RequestParam String message) throws Exception{
 		chatService.save(receiveid, sendid, message);
 		return 1;
 	}

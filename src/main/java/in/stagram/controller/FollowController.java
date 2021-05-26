@@ -71,7 +71,7 @@ public class FollowController {
 	
 	@RequestMapping("/follow/insert/{id}")
 	@ResponseBody
-	private int follow_insert(@PathVariable int id) throws Exception{
+	public int follow_insert(@PathVariable int id) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User u = userService.findByUserId(userId);
 		
@@ -81,7 +81,7 @@ public class FollowController {
 	
 	@RequestMapping("/follow/delete/{id}")
 	@ResponseBody
-	private int follow_delete(@PathVariable int id) throws Exception{
+	public int follow_delete(@PathVariable int id) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User u = userService.findByUserId(userId);
 		
@@ -91,7 +91,7 @@ public class FollowController {
 	
 	@RequestMapping("/follow/request/view")
 	@ResponseBody
-	private Map<String, Object> follow_request_view() throws Exception{
+	public Map<String, Object> follow_request_view() throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User u = userService.findByUserId(userId);
 		int followcount = follow_requestService.countByReceiveId(u.getId());
@@ -105,7 +105,7 @@ public class FollowController {
 	
 	@RequestMapping("/follow/request/accept/{id}")
 	@ResponseBody
-	private User follow_request_accept(@PathVariable int id) throws Exception{
+	public User follow_request_accept(@PathVariable int id) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User u = userService.findByUserId(userId);
 		
@@ -118,7 +118,7 @@ public class FollowController {
 	
 	@RequestMapping("/follow/request/{id}")
 	@ResponseBody
-	private int follow_request(@PathVariable int id) throws Exception{
+	public int follow_request(@PathVariable int id) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User u = userService.findByUserId(userId);
 		

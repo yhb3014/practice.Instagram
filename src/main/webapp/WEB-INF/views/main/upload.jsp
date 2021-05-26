@@ -71,11 +71,11 @@
 			</div>
 
 			<div class="form-group">
-				<input type="text" class="form-control w300" id="description" name="description" placeholder="문구 입력..." />
+				<input type="text" class="form-control w300" id="description" style="margin-top: 5px;" name="description" placeholder="문구 입력..." />
 			</div>
 
 			<div class="form-group">
-				<input type="text" class="form-control w200" id="location" name="location" placeholder="위치 추가" />
+				<input type="text" class="form-control w200" id="tag" name="tag" placeholder="태그 입력" />
 			</div>
 			<button class="btn btn-primary">완료</button>
 		</form>

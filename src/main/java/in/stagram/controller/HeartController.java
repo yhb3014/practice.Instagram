@@ -36,7 +36,7 @@ public class HeartController {
 	
 	@RequestMapping("/like/view")
 	@ResponseBody
-	private Map<String, Object> like_view(Model model, int id) throws Exception{
+	public Map<String, Object> like_view(Model model, int id) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User u = userService.findByUserId(userId);
 		
@@ -52,7 +52,7 @@ public class HeartController {
 	
 	@RequestMapping("/like/insert/{id}")
 	@ResponseBody
-	private int like_insert(@PathVariable int id) throws Exception{
+	public int like_insert(@PathVariable int id) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User u = userService.findByUserId(userId);
 		Post p = postService.findById(id);
@@ -63,7 +63,7 @@ public class HeartController {
 	
 	@RequestMapping("/like/delete/{id}")
 	@ResponseBody
-	private int like_delete(@PathVariable int id) throws Exception{
+	public int like_delete(@PathVariable int id) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User u = userService.findByUserId(userId);
 		

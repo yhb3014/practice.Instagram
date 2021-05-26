@@ -18,24 +18,24 @@ import in.stagram.service.CommentService;
 public class CommentController {
 	
 	@Autowired
-	private CommentService commentService;
+	public CommentService commentService;
 	
 	@RequestMapping("/list")
 	@ResponseBody
-	private List<Comment> comment_list(Model model, int id) throws Exception{
+	public List<Comment> comment_list(Model model, int id) throws Exception{
 		return commentService.findByPostId(id);
 	}
 	
 	@RequestMapping("/insert")
 	@ResponseBody
-	private int c_insert(@RequestParam int pid, @RequestParam int uid, @RequestParam String content) throws Exception{
+	public int c_insert(@RequestParam int pid, @RequestParam int uid, @RequestParam String content) throws Exception{
 		commentService.save(pid, uid, content);
 		return 1;
 	}
 	
 	@RequestMapping("/delete/{id}")
 	@ResponseBody
-	private int comment_delete(@PathVariable int id) throws Exception{
+	public int comment_delete(@PathVariable int id) throws Exception{
 		return commentService.deleteById(id);
 	}
 }

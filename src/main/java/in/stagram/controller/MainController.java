@@ -57,7 +57,7 @@ public class MainController {
 	private ChatService chatservice;
 	
 	@RequestMapping("/main")
-	private String main_page(Model model) throws Exception{
+	public String main_page(Model model) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User u = userService.findByUserId(userId);
 		
@@ -108,7 +108,7 @@ public class MainController {
 	}
 	
 	@RequestMapping("/main/user/{id}")
-	private String main_user(@PathVariable("id") int id, Model model) throws Exception{
+	public String main_user(@PathVariable("id") int id, Model model) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User user = userService.findById(id);
 		
@@ -125,25 +125,25 @@ public class MainController {
 	}
 	
 	@RequestMapping("/main/user/follower/{id}")
-	private String follower(@PathVariable("id") int id, Model model) throws Exception{
+	public String follower(@PathVariable("id") int id, Model model) throws Exception{
 		model.addAttribute("follower", followService.findByFollowerId(id));
 		return "/main/user/follower";
 	}
 	
 	@RequestMapping("/main/user/following/{id}")
-	private String following(@PathVariable("id") int id, Model model) throws Exception{
+	public String following(@PathVariable("id") int id, Model model) throws Exception{
 		model.addAttribute("following", followService.findByFollowingId(id));
 		return "/main/user/following";
 	}
 	
 	@GetMapping("/main/user/update/{id}")
-	private String update_user(@PathVariable("id") int id , Model model) throws Exception{
+	public String update_user(@PathVariable("id") int id , Model model) throws Exception{
 		model.addAttribute("user", userService.findById(id));
 		return "/main/user/update";
 	}
 	
 	@RequestMapping(value = "/main/user/image_insert")
-	private String image_insert(HttpServletRequest request, @RequestParam("filename") MultipartFile mFile, Model model) throws Exception{
+	public String image_insert(HttpServletRequest request, @RequestParam("filename") MultipartFile mFile, Model model) throws Exception{
 		String upload_path = "C:/Users/User/Desktop/instagram/src/main/resources/static/images";
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User user = userService.findByUserId(userId);
@@ -162,7 +162,7 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/main/user/info_update")
-	private String profile_update(HttpServletRequest request, Model model) throws Exception{
+	public String profile_update(HttpServletRequest request, Model model) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User user = userService.findByUserId(userId);
 		String redirect_url = "redirect:/main/user/"+user.getId();
@@ -176,12 +176,12 @@ public class MainController {
 	}
 	
 	@GetMapping("/main/upload")
-	private String upload(Model model) throws Exception{
+	public String upload(Model model) throws Exception{
 		return "/main/upload";
 	}
 	
 	@RequestMapping("/main/posting")
-	private String posting(HttpServletRequest request, MultipartHttpServletRequest mtfRequest, Model model) throws Exception{
+	public String posting(HttpServletRequest request, MultipartHttpServletRequest mtfRequest, Model model) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		String path = "C:/Users/User/Desktop/instagram/src/main/resources/static/images/"+userId;
 		File file = new File(path);
@@ -197,10 +197,10 @@ public class MainController {
 		User user = userService.findById(user_id);
 		
 		String description = request.getParameter("description");
-		String location = request.getParameter("location");
+		String tag = request.getParameter("tag");
 		
 		post.setDescription(description);
-		post.setLocation(location);
+		post.setTag(tag);
 		post.setUser(user);
 		
 		post.setId(postService.save(post));
@@ -233,23 +233,33 @@ public class MainController {
 	}
 	
 	@RequestMapping("/main/recommend")
-	private String recommend(Model model) throws Exception{
+	public String recommend(Model model) throws Exception{
 		model.addAttribute("post9", postService.findByPostlimit9());
 		model.addAttribute("post_image", post_imageService.findByGroupbyPostId());
 		return "/main/recommend";
 	}
 	
 	@RequestMapping(value = "main/search")
-	private String search(@RequestParam("word") String word, Model model) throws Exception{
+	public String search(@RequestParam("word") String word, Model model) throws Exception{
 		model.addAttribute("find_user", userService.findByUserIdContains(word));
 		model.addAttribute("ucnt", userService.countByUserIdContains(word));
 		model.addAttribute("word", word);
+		model.addAttribute("tag_cnt", postService.countByTagContains(word));
 		
 		return "main/search";
 	}
 	
+	@RequestMapping("main/search/tag/{word}")
+	public String search_tag(@PathVariable("word") String word, Model model) throws Exception{
+		model.addAttribute("post", postService.findByTagContains(word));
+		model.addAttribute("post_image", post_imageService.findByGroupbyPostId());
+		model.addAttribute("word", word);
+		
+		return "/main/search/tag";
+	}
+	
 	@RequestMapping(value = "main/post/{id}")
-	private String post(@PathVariable("id") int id, Model model) throws Exception{
+	public String post(@PathVariable("id") int id, Model model) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User user = userService.findByUserId(userId);
 		
@@ -262,7 +272,7 @@ public class MainController {
 	}
 	
 	@GetMapping("/main/user/secret_user")
-	private String secret_user(Model model) throws Exception{
+	public String secret_user(Model model) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User user = userService.findByUserId(userId);
 		
@@ -271,7 +281,7 @@ public class MainController {
 	}
 	
 	@RequestMapping("main/heart")
-	private String heart(Model model) throws Exception{
+	public String heart(Model model) throws Exception{
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		User user = userService.findByUserId(userId);
 		List<Post> Lpost = postService.findByUserUserId(userId);
@@ -340,4 +350,5 @@ public class MainController {
 		userService.deleteById(userid);
 		return "redirect:/main/logout_processing";
 	}
+	
 }

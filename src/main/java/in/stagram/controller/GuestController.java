@@ -19,17 +19,17 @@ public class GuestController {
 	private UserService userService;
 	
 	@GetMapping({"/guest/login", "/"})
-	private String login(Model model) throws Exception{
+	public String login(Model model) throws Exception{
 		return "/guest/login";
 	}
 	
 	@GetMapping("/guest/register")
-	private String register(UserRegistrationModel userModel, Model model) throws Exception{
+	public String register(UserRegistrationModel userModel, Model model) throws Exception{
 		return "/guest/register";
 	}
 	
 	@PostMapping("/guest/register")
-	private String register(@Valid UserRegistrationModel userModel, BindingResult bindingResult) throws Exception{
+	public String register(@Valid UserRegistrationModel userModel, BindingResult bindingResult) throws Exception{
 		if(userService.hasErrors(userModel, bindingResult)) {
 			return "/guest/register";
 		}

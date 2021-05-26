@@ -112,7 +112,26 @@
 						</div>
 						<div class="write" style="cursor: pointer;">
 							<span onclick="location.href='/main/post/${p.id}'">${p.description}</span>
-								<div class="tag_${p.id}"></div> <!-- 태그는 아직 -->
+								<div class="tag_${p.id}"></div>
+								
+								<script>
+									var original = '${p.tag}';
+									var url = '\'/main/search/tag/';
+									var pid = '${p.id}';
+									var a = '';
+									var arr = original.split(', ');
+									for (var i = 0; i < arr.length; i++) {
+										a += '<span style="color:blue;" onclick="location.href='
+												+ url
+												+ arr[i].replace("#", "")
+												+ '\''
+												+ '">'
+												+ arr[i]
+												+ ' </span>';
+									}
+									$(".tag_" + pid).html(a);
+								</script>
+								
 								<br />
 								<c:forEach var="cmt" items="${cmt_cnt}">
 								<c:if test="${p.id == cmt.postid && cmt.cnt > 0}">

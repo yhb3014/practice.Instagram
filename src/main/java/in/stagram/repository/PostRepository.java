@@ -26,4 +26,7 @@ public interface PostRepository extends JpaRepository<Post, Integer>{
 	void deleteById(int id);
 	
 	List<Post> findByUserId(int id);
+	
+	int countByTagContains(String word);
+	List<Post> findByTagContains(String word);
 }
