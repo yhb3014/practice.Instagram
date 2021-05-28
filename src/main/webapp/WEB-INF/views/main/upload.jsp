@@ -16,23 +16,62 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/res/user.css" type="text/css">
 <title>Instagram</title>
+<style>
+.contents {
+	bottom: 6rem;
+	width: 500px;
+	height: 800px;
+	margin: auto;
+}
+#footer {
+	position: fixed;
+	background-color: white; /*임의색상*/
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 6rem;
+}
+input.form-control.w300 {
+	width: 500px;
+	height: 300px;
+	font-size: 13px;
+}
+body {
+	font-family: 'Poor Story', cursive;
+}
+.miribogi {
+	width: 500px;
+	height: 150px;
+	border: 3px solid #eee;
+	padding: 10px 20px;
+	margin: 20px 0;
+	display: none;
+}
+.miribogi span {
+	font-size: 12px;
+	font-weight: bold;
+	display: inline-block;
+	width: 90px;
+}
+</style>
 </head>
 <body>
 	<div class="contents">
 		<sec:authentication property="user.id" var="currentid" />
-		<form action="/main/posting" method="post" enctype="multipart/form-data" autocomplete="off">
+		<form action="/main/posting" method="post"
+			enctype="multipart/form-data" autocomplete="off">
 			<input type="hidden" id="userid" name="userid" value="${currentid}">
 
 			<div class="form-group">
-				<label for="file">파일 업로드 </label> <input multiple="multiple" type="file" id="gdsImg" name="files" required />
+				<label for="file" style="margin-top: 50px;">파일 업로드 </label> <input
+					multiple="multiple" type="file" id="gdsImg" name="files" required />
 			</div>
+
 
 			<div class="miribogi">
 				<div class="select_img">
 					<img src="">
-					<!-- 타이틀 사진이미지 view -->
 				</div>
-
 				<script>
 					$("#gdsImg").change(
 							function() {
@@ -46,16 +85,13 @@
 								}
 							});
 				</script>
-
-				<button type="button" class="btn cancel_btn">접기</button>
-
+				<button type="button" class="btn cancel_btn" style="float: right;">접기</button>
 				<script>
 					$(".cancel_btn").click(function() {
 						$(".miribogi").slideUp();
 						$(".orderOpne_bnt").slideDown();
 					});
 				</script>
-
 			</div>
 
 			<div class="orderOpne">
@@ -71,13 +107,15 @@
 			</div>
 
 			<div class="form-group">
-				<input type="text" class="form-control w300" id="description" style="margin-top: 5px;" name="description" placeholder="문구 입력..." />
+				<input type="text" class="form-control w300" id="description"
+					style="margin-top: 5px;" name="description" placeholder="문구 입력..." />
 			</div>
 
 			<div class="form-group">
-				<input type="text" class="form-control w200" id="tag" name="tag" placeholder="태그 입력" />
+				<input type="text" class="form-control w200" id="location"
+					name="location" placeholder="태그 입력" />
 			</div>
-			<button class="btn btn-primary">완료</button>
+			<button class="btn btn-primary" style="float: right;">완료</button>
 		</form>
 	</div>
 

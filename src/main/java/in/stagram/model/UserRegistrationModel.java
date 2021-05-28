@@ -9,7 +9,7 @@ import lombok.Data;
 public class UserRegistrationModel {
 	
 	@NotNull(message = "ID를 입력하세요.")
-	@Size(min = 3,max = 12)
+	@Size(min = 2,max = 12)
 	String userid;
 	
 	@NotNull(message = "Password를 입력하세요.")

@@ -306,7 +306,7 @@ public class MainController {
 		return "main/heart";
 	}
 	
-	@RequestMapping("/main/delete_post")
+	@RequestMapping("main/delete_post")
 	public String delete_post(HttpServletRequest request, Model model) throws Exception{
 		String pid = request.getParameter("postid");
 		int postid = Integer.parseInt(pid);

@@ -15,13 +15,67 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,900&display=swap" rel="stylesheet">
 <title>${user.name}님의Feed</title>
 <style>
+.title_image {
+	margin-top: 20px;
+	margin-left: 231px;
+	height: 100px;
+	width: 110px;
+}
+.profile_image {
+	width: 90px;
+	height: 90px;
+	border-radius: 45px;
+}
 #footer {
 	position: fixed;
-	background-color: white;
+	background-color: white; /*임의색상*/
 	left: 0;
 	right: 0;
 	bottom: 0;
 	height: 6rem;
+}
+#contents {
+	bottom: 6rem;
+}
+.img {
+	width: 500px;
+	height: 100px;
+}
+.filebox {
+	width: 500px;
+	height: 40px;
+}
+.filebox label {
+	text-align: center;
+	padding: .5em .75em;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	cursor: pointer;
+	border-radius: .25em;
+	display: inline-block;
+}
+.filebox label:hover {
+	background-color: #ebebeb;
+}
+.filebox input[type="file"] {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+.info {
+	width: 500px;
+	height: 200px;
+	margin-left: 120px;
+}
+input.form-control.w200 {
+	width: 300px;
+	font-size: 13px;
 }
 </style>
 </head>
@@ -31,41 +85,49 @@
 			<div class="title_image">
 				<c:choose>
 					<c:when test="${user.profile_photo == null}">
-						<img src="/images/noimage.png" class="profile_image">
+						<img src="/images/noimage.png" class="profile_image"
+							style="margin-right: 80px;">
 					</c:when>
 					<c:otherwise>
-						<img src="/images/profile/${user.profile_photo}" class="profile_image">
+						<img src="/images/profile/${user.profile_photo}"
+							class="profile_image" style="margin-right: 80px;">
 					</c:otherwise>
 				</c:choose>
 			</div>
 		</div>
 		<div class="filebox">
-			<form action="/main/user/image_insert" id="form" name="form" method="post" enctype="multipart/form-data" autocomplete="off">
-				<label for="ex_file">프로필 사진 바꾸기</label> <input type="file" id="ex_file" name="filename" required />
+			<form action="/main/user/image_insert" id="form" name="form"
+				method="post" enctype="multipart/form-data" autocomplete="off">
+				<label for="ex_file" style="margin-left: 60px; width: 310px;">프로필
+					사진 바꾸기</label> <input type="file" id="ex_file" name="filename" required />
 				<button type="submit" class="btn btn-default">업로드</button>
 			</form>
 		</div>
+
+
+		<div class="info">
+			<form action="/main/user/info_update">
+				<div class="form-group">
+					<label for="name">이름</label><input type="text"
+						class="form-control w200" id="name" name="name" placeholder="이름"
+						value="${user.name}" />
+				</div>
+				<div class="form-group">
+					<label for="website">웹사이트</label><input type="text"
+						class="form-control w200" id="website" name="website"
+						placeholder="웹사이트" value="${user.website}" />
+				</div>
+				<div class="form-group">
+					<label for="intro">소개</label><input type="text"
+						class="form-control w200" id="intro" name="intro" placeholder="소개"
+						value="${user.introduce}" />
+				</div>
+				<button type="submit" style="margin-left: 250px;"
+					class="btn btn-default">완료</button>
+			</form>
+		</div>
 	</div>
-	<div class="info">
-	<form action="/main/user/info_update">
-		<div class="form-group">
-			<label for="name">이름</label>
-			<input type="text" class="form-control w200" id="name" 
-				name="name" placeholder="이름" value="${user.name}" />
-		</div>
-		<div class="form-group">
-			<label for="website">웹사이트</label>
-			<input type="text" class="form-control w200" id="website" 
-				name="website" placeholder="웹사이트" value="${user.website}" />
-		</div>
-		<div class="form-group">
-			<label for="intro">소개</label>
-			<input type="text" class="form-control w200" id="intro" 
-				name="intro" placeholder="소개" value="${user.introduce}" />
-		</div>
-		<button type="submit" class="btn btn-default">완료</button>
-	</form>
-</div>
+
 	<div id="footer">
 		<%@ include file="../../include/bottom.jsp"%>
 	</div>
